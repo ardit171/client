@@ -79,3 +79,5 @@ if __name__ == '__main__':
             moveClick(float(width), float(height))
         elif command == "TYPE_MSG":
             typeMSG(response['params'])
+        elif command == "SLEEP":
+            pyautogui.sleep(int(response['params']))
