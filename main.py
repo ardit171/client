@@ -43,9 +43,7 @@ def take_screenshot(id_device):
 
 def moveClick(width, height):
     hc = HumanClicker()
-    # move the mouse to position (100,100) on the screen in approximately 2 seconds
     hc.move((int(width), int(height)), 1)
-    # mouse click(left button)
     hc.click()
     pass
 
@@ -65,8 +63,8 @@ if __name__ == '__main__':
             path = take_screenshot(id_device)
             uploadImage(path, id_device)
         elif command == "MV_CLICK":
-            width = command['parametrs']['width']
-            height = command['parametrs']['height']
-            moveClick(width, height)
+            width = response['params']['width']
+            height = response['params']['height']
+            moveClick(float(width), float(height))
         elif command == "TYPE_MSG":
-            typeMSG(command['params'])
+            typeMSG(response['params'])
