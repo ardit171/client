@@ -1,3 +1,4 @@
+import argparse
 import base64
 import json
 import os
@@ -6,8 +7,8 @@ import requests
 from pyclick import HumanClicker
 
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-API_URL = 'http://192.168.0.114:8080'
-id_device = 1
+API_URL = ''
+id_device = ''
 
 
 def uploadImage(path, id_device):
@@ -54,6 +55,13 @@ def typeMSG(msg):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='Client Automation Script.')
+    parser.add_argument('-d', dest='id_device', help='Id of the Device')
+    parser.add_argument('-s', dest='api', help='Server Ip')
+    args = parser.parse_args()
+    API_URL = args.api
+    id_device = args.id_device
     if not os.path.exists(str(id_device)):
         os.makedirs(str(id_device))
     while True:
