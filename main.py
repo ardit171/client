@@ -54,6 +54,8 @@ def typeMSG(msg):
 
 
 if __name__ == '__main__':
+    if not os.path.exists(str(id_device)):
+        os.makedirs(str(id_device))
     while True:
         pyautogui.sleep(3)
         response = getCommand(id_device)
