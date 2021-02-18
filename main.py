@@ -28,7 +28,8 @@ def getCommand(id_device):
 
 
 def open_browser(url):
-    os.system("firefox --url" + url)
+    command = 'firefox {url} &'.format(url=url)
+    os.system(command)
     pass
 
 
