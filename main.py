@@ -6,7 +6,7 @@ import requests
 from pyclick import HumanClicker
 
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-API_URL = 'http://localhost:8080'
+API_URL = 'http://192.168.0.114:8080'
 id_device = 1
 
 
