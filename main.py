@@ -57,8 +57,8 @@ def typeMSG(msg):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Client Automation Script.')
-    parser.add_argument('-d', dest='id_device', help='Id of the Device')
-    parser.add_argument('-s', dest='api', help='Server Ip')
+    parser.add_argument('-d', dest='id_device',required=True, help='Id of the Device')
+    parser.add_argument('-s', dest='api',required=True, help='Server Ip')
     args = parser.parse_args()
     API_URL = args.api
     id_device = args.id_device
