@@ -68,6 +68,7 @@ if __name__ == '__main__':
         pyautogui.sleep(3)
         response = getCommand(id_device)
         command = response['command']
+        print(command)
         if command == 'OPEN_BROWSER':
             open_browser(response['params'])
         elif command == "TAKE_SCREEN_SHOT":
