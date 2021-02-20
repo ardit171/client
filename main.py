@@ -81,3 +81,5 @@ if __name__ == '__main__':
             typeMSG(response['params'])
         elif command == "SLEEP":
             pyautogui.sleep(int(response['params']))
+        elif command == "PRESS_KEY":
+            pyautogui.press(response['params'])
