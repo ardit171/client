@@ -54,6 +54,12 @@ def typeMSG(msg):
     pyautogui.typewrite(msg)
 
 
+def close_browser():
+    command = 'pkill firefox'
+    os.system(command)
+    pass
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Client Automation Script.')
@@ -84,3 +90,5 @@ if __name__ == '__main__':
             pyautogui.sleep(int(response['params']))
         elif command == "PRESS_KEY":
             pyautogui.press(response['params'])
+        elif command == "CLOSE_BROWSER":
+            close_browser()
