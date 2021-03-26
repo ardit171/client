@@ -47,8 +47,12 @@ def moveClick(width, height):
     hc = HumanClicker()
     hc.move((int(width), int(height)), 1)
     hc.click()
-    pass
 
+
+def moveMove(width, height):
+    hc = HumanClicker()
+    hc.move((int(width), int(height)), 1)
+    pass
 
 def typeMSG(msg):
     pyautogui.typewrite(msg)
@@ -92,3 +96,7 @@ if __name__ == '__main__':
             pyautogui.press(response['params'])
         elif command == "CLOSE_BROWSER":
             close_browser()
+        elif command == "MV_MV":
+            width = response['params']['width']
+            height = response['params']['height']
+            moveMove(float(width), float(height))
