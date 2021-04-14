@@ -5,6 +5,8 @@ import os
 import pyautogui as pyautogui
 import requests
 from pyclick import HumanClicker
+import threading
+import api
 
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 API_URL = ''
@@ -57,6 +59,8 @@ def moveMove(width, height):
 def typeMSG(msg):
     pyautogui.typewrite(msg)
 
+def scroll(ticks):
+    pyautogui.scroll(ticks)
 
 def close_browser():
     command = 'pkill firefox'
@@ -72,6 +76,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     API_URL = args.api
     id_device = args.id_device
+    t1 = threading.Thread(target=api.run_server_api)
+    t1.setDaemon(True)
+    t1.start()
     if not os.path.exists(str(id_device)):
         os.makedirs(str(id_device))
     while True:
