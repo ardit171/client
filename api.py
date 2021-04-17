@@ -13,7 +13,7 @@ def home():
 def command():
     command = request.json['command']
     if command == "SCROLL":
-        main.scroll(-100)
+        main.scroll(-10)
     return jsonify({'message': 'success!'}), 200
 
 def run_server_api():
