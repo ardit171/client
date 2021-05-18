@@ -111,7 +111,6 @@ if __name__ == '__main__':
             verifyJob(id_device)
         elif command == "SLEEP":
             pyautogui.sleep(int(response['params']))
-            verifyJob(id_device)
         elif command == "PRESS_KEY":
             pyautogui.press(response['params'])
             verifyJob(id_device)
