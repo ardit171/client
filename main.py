@@ -66,23 +66,29 @@ def close_browser():
     command = 'pkill firefox'
     os.system(command)
     pass
+def verifyJob(id_device):
+    requests.get('{api}/jobVerify/{id_device}'.format(api=API_URL, id_device=id_device),
+                 headers=headers)
+
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Client Automation Script.')
-    parser.add_argument('-d', dest='id_device',required=True, help='Id of the Device')
-    parser.add_argument('-s', dest='api',required=True, help='Server Ip')
-    args = parser.parse_args()
-    API_URL = args.api
-    id_device = args.id_device
+    # parser = argparse.ArgumentParser(
+    #     description='Client Automation Script.')
+    # parser.add_argument('-d', dest='id_device',required=True, help='Id of the Device')
+    # parser.add_argument('-s', dest='api',required=True, help='Server Ip')
+    # args = parser.parse_args()
+    # API_URL = args.api
+    API_URL = "http://127.0.0.1:8080"
+    # id_device = args.id_device
+    id_device = "1"
     t1 = threading.Thread(target=api.run_server_api)
     t1.setDaemon(True)
     t1.start()
     if not os.path.exists(str(id_device)):
         os.makedirs(str(id_device))
     while True:
-        pyautogui.sleep(3)
+        pyautogui.sleep(1)
         path = take_screenshot(id_device)
         uploadImage(path,id_device, True)
         response = getCommand(id_device)
@@ -90,22 +96,31 @@ if __name__ == '__main__':
         print(command)
         if command == 'OPEN_BROWSER':
             open_browser(response['params'])
+            verifyJob(id_device)
         elif command == "TAKE_SCREEN_SHOT":
             path = take_screenshot(id_device)
             uploadImage(path, id_device, False)
+            verifyJob(id_device)
         elif command == "MV_CLICK":
             width = response['params']['width']
             height = response['params']['height']
             moveClick(float(width), float(height))
+            verifyJob(id_device)
         elif command == "TYPE_MSG":
             typeMSG(response['params'])
+            verifyJob(id_device)
         elif command == "SLEEP":
             pyautogui.sleep(int(response['params']))
+            verifyJob(id_device)
         elif command == "PRESS_KEY":
             pyautogui.press(response['params'])
+            verifyJob(id_device)
         elif command == "CLOSE_BROWSER":
             close_browser()
+            verifyJob(id_device)
         elif command == "MV_MV":
             width = response['params']['width']
             height = response['params']['height']
             moveMove(float(width), float(height))
+            if not 'interact' in response['params']:
+                verifyJob(id_device)
