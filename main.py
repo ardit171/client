@@ -5,6 +5,7 @@ import os
 import pyautogui as pyautogui
 import requests
 from pyclick import HumanClicker
+from typer import Typer
 import threading
 import api
 
@@ -57,7 +58,8 @@ def moveMove(width, height):
     pass
 
 def typeMSG(msg):
-    pyautogui.typewrite(msg)
+    ty = Typer(accuracy=0.90, correction_chance=0.50, typing_delay=(0.04, 0.08), distance=2)
+    ty.send(pyautogui, msg)
 
 def scroll(ticks):
     pyautogui.scroll(ticks)
