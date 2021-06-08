@@ -97,7 +97,6 @@ if __name__ == '__main__':
         command = response['command']
         print(command)
         if command == 'OPEN_BROWSER':
-            verifyJob(id_device)
             open_browser(response['params'])
             verifyJob(id_device)
         elif command == "TAKE_SCREEN_SHOT":
