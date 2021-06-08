@@ -97,6 +97,7 @@ if __name__ == '__main__':
         command = response['command']
         print(command)
         if command == 'OPEN_BROWSER':
+            verifyJob(id_device)
             open_browser(response['params'])
             verifyJob(id_device)
         elif command == "TAKE_SCREEN_SHOT":
@@ -112,6 +113,7 @@ if __name__ == '__main__':
             typeMSG(response['params'])
             verifyJob(id_device)
         elif command == "SLEEP":
+            close_browser()
             pyautogui.sleep(int(response['params']))
         elif command == "PRESS_KEY":
             pyautogui.press(response['params'])
