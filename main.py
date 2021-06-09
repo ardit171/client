@@ -12,7 +12,8 @@ import api
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 API_URL = ''
 id_device = ''
-
+hc = HumanClicker()
+ty = Typer(accuracy=0.90, correction_chance=0.50, typing_delay=(0.04, 0.08), distance=2)
 
 def uploadImage(path, id_device, cron):
     image_file = path
@@ -47,18 +48,15 @@ def take_screenshot(id_device):
 
 
 def moveClick(width, height):
-    hc = HumanClicker()
     hc.move((int(width), int(height)), 1)
     hc.click()
 
 
 def moveMove(width, height):
-    hc = HumanClicker()
     hc.move((int(width), int(height)), 1)
     pass
 
 def typeMSG(msg):
-    ty = Typer(accuracy=0.90, correction_chance=0.50, typing_delay=(0.04, 0.08), distance=2)
     ty.send(pyautogui, msg)
 
 def scroll(ticks):
@@ -90,39 +88,49 @@ if __name__ == '__main__':
     if not os.path.exists(str(id_device)):
         os.makedirs(str(id_device))
     while True:
-        pyautogui.sleep(1)
-        path = take_screenshot(id_device)
-        uploadImage(path,id_device, True)
-        response = getCommand(id_device)
-        command = response['command']
-        print(command)
-        if command == 'OPEN_BROWSER':
-            open_browser(response['params'])
-            verifyJob(id_device)
-        elif command == "TAKE_SCREEN_SHOT":
+        try:
+            pyautogui.sleep(1)
             path = take_screenshot(id_device)
-            uploadImage(path, id_device, False)
-            verifyJob(id_device)
-        elif command == "MV_CLICK":
-            width = response['params']['width']
-            height = response['params']['height']
-            moveClick(float(width), float(height))
-            verifyJob(id_device)
-        elif command == "TYPE_MSG":
-            typeMSG(response['params'])
-            verifyJob(id_device)
-        elif command == "SLEEP":
-            close_browser()
-            pyautogui.sleep(int(response['params']))
-        elif command == "PRESS_KEY":
-            pyautogui.press(response['params'])
-            verifyJob(id_device)
-        elif command == "CLOSE_BROWSER":
-            close_browser()
-            verifyJob(id_device)
-        elif command == "MV_MV":
-            width = response['params']['width']
-            height = response['params']['height']
-            moveMove(float(width), float(height))
-            if not 'interact' in response['params']:
+            response = getCommand(id_device)
+            command = response['command']
+            print(command)
+            if command == 'OPEN_BROWSER':
+                open_browser(response['params'])
                 verifyJob(id_device)
+                uploadImage(path, id_device, True)
+            elif command == "TAKE_SCREEN_SHOT":
+                path = take_screenshot(id_device)
+                uploadImage(path, id_device, False)
+                verifyJob(id_device)
+                uploadImage(path, id_device, True)
+            elif command == "MV_CLICK":
+                width = response['params']['width']
+                height = response['params']['height']
+                moveClick(float(width), float(height))
+                verifyJob(id_device)
+                uploadImage(path, id_device, True)
+            elif command == "TYPE_MSG":
+                typeMSG(response['params'])
+                verifyJob(id_device)
+                uploadImage(path, id_device, True)
+            elif command == "SLEEP":
+                close_browser()
+                pyautogui.sleep(int(response['params']))
+                uploadImage(path, id_device, True)
+            elif command == "PRESS_KEY":
+                pyautogui.press(response['params'])
+                verifyJob(id_device)
+                uploadImage(path, id_device, True)
+            elif command == "CLOSE_BROWSER":
+                close_browser()
+                verifyJob(id_device)
+                uploadImage(path, id_device, True)
+            elif command == "MV_MV":
+                width = response['params']['width']
+                height = response['params']['height']
+                moveMove(float(width), float(height))
+                if not 'interact' in response['params']:
+                    verifyJob(id_device)
+                uploadImage(path, id_device, True)
+        except:
+            print("Error")
